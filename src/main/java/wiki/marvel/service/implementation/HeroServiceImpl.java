@@ -1,7 +1,6 @@
 package wiki.marvel.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import wiki.marvel.entity.HeroEntity;
 import wiki.marvel.repository.HeroRepository;
 import wiki.marvel.service.HeroService;
@@ -12,8 +11,12 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class HeroServiceImpl implements HeroService {
+    private final HeroRepository heroRepository;
+
     @Autowired
-    private HeroRepository heroRepository;
+    public HeroServiceImpl(HeroRepository heroRepository) {
+        this.heroRepository = heroRepository;
+    }
 
     @Override
     public HeroEntity save(HeroEntity entity) {
