@@ -11,11 +11,9 @@ import wiki.marvel.service.HeroService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-// TODO: JSON response in error
-// TODO: change entity to dto
 
 @RestController(value = "/hero")
 public class HeroController {
@@ -35,7 +33,8 @@ public class HeroController {
         boolean isExists = heroService.existsById(id);
 
         if(!isExists) {
-            return new ResponseEntity<>("Not found hero!", HttpStatus.BAD_REQUEST);
+            String errorMessage = "not found hero";
+            return new ResponseEntity<>(Map.entry("message", errorMessage), HttpStatus.BAD_REQUEST);
         }
 
         heroService.delete(heroEntity);
@@ -50,7 +49,8 @@ public class HeroController {
         boolean isExists = heroService.existsById(id);
 
         if(!isExists) {
-            return new ResponseEntity<>("Not found hero by id:" + id, HttpStatus.BAD_REQUEST);
+            String errorMessage = "not found by id" + id;
+            return new ResponseEntity<>(Map.entry("message", errorMessage), HttpStatus.BAD_REQUEST);
         }
 
         heroService.deleteById(id);
@@ -72,7 +72,8 @@ public class HeroController {
         Optional<HeroEntity> optionalHeroEntity = heroService.findById(id);
 
         if(optionalHeroEntity.isEmpty()) {
-            return new ResponseEntity<>("Not found hero by id:" + id, HttpStatus.NOT_FOUND);
+            String errorMessage = "not found by id" + id;
+            return new ResponseEntity<>(Map.entry("message", errorMessage), HttpStatus.NOT_FOUND);
         }
 
         HeroEntity heroEntity = optionalHeroEntity.get();
