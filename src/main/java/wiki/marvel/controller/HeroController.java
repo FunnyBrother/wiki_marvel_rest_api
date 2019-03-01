@@ -12,6 +12,7 @@ import wiki.marvel.service.HeroService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 // TODO: JSON response in error
 // TODO: change entity to dto
@@ -82,13 +83,15 @@ public class HeroController {
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<List<HeroEntity>> findAll() {
+    public ResponseEntity<List<HeroDto>> findAll() {
         List<HeroEntity> heroEntityList = heroService.findAll();
 
         if(heroEntityList.isEmpty()) {
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(heroEntityList, HttpStatus.OK);
+        List<HeroDto> heroDtoList = heroEntityList.stream().map(heroEntity -> modelMapper.map(heroEntity, HeroDto.class)).collect(Collectors.toList());
+
+        return new ResponseEntity<>(heroDtoList, HttpStatus.OK);
     }
 }
