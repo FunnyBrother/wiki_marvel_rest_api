@@ -58,10 +58,12 @@ public class HeroController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<HeroEntity> save(@RequestBody HeroEntity heroEntity) {
+    public ResponseEntity<HeroDto> save(@RequestBody HeroEntity heroEntity) {
         heroEntity = heroService.save(heroEntity);
 
-        return new ResponseEntity<>(heroEntity, HttpStatus.OK);
+        HeroDto heroDto = modelMapper.map(heroEntity, HeroDto.class);
+
+        return new ResponseEntity<>(heroDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
