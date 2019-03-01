@@ -76,7 +76,9 @@ public class HeroController {
 
         HeroEntity heroEntity = optionalHeroEntity.get();
 
-        return new ResponseEntity<>(heroEntity, HttpStatus.OK);
+        HeroDto heroDto = modelMapper.map(heroEntity, HeroDto.class);
+
+        return new ResponseEntity<>(heroDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/")
