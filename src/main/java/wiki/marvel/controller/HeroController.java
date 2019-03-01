@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static wiki.marvel.enums.HeroErrorMessagesEnum.*;
+
 @RestController(value = "/hero")
 public class HeroController {
     private final HeroService heroService;
@@ -32,8 +34,7 @@ public class HeroController {
         boolean isExists = heroService.existsById(id);
 
         if(!isExists) {
-            String errorMessage = "not found hero";
-            return new ResponseEntity<>(Map.entry("message", errorMessage), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Map.entry("message", NOT_FOUND_HERO), HttpStatus.BAD_REQUEST);
         }
 
         heroService.delete(heroEntity);
@@ -48,8 +49,7 @@ public class HeroController {
         boolean isExists = heroService.existsById(id);
 
         if(!isExists) {
-            String errorMessage = "not found by id" + id;
-            return new ResponseEntity<>(Map.entry("message", errorMessage), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Map.entry("message", NOT_FOUND_HERO_BY_ID), HttpStatus.BAD_REQUEST);
         }
 
         heroService.deleteById(id);
@@ -71,8 +71,7 @@ public class HeroController {
         Optional<HeroEntity> optionalHeroEntity = heroService.findById(id);
 
         if(optionalHeroEntity.isEmpty()) {
-            String errorMessage = "not found by id" + id;
-            return new ResponseEntity<>(Map.entry("message", errorMessage), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Map.entry("message", NOT_FOUND_HERO_BY_ID), HttpStatus.NOT_FOUND);
         }
 
         HeroEntity heroEntity = optionalHeroEntity.get();
@@ -87,8 +86,7 @@ public class HeroController {
         List<HeroEntity> heroEntityList = heroService.findAll();
 
         if(heroEntityList.isEmpty()) {
-            String errorMessage = "Not found anyone heroes";
-            return new ResponseEntity<>(Map.entry("message", errorMessage), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(Map.entry("message", NOT_FOUND_ANYONE_HEROES), HttpStatus.NO_CONTENT);
         }
 
         List<HeroDto> heroDtoList = heroEntityList.stream().map(heroEntity -> modelMapper.map(heroEntity, HeroDto.class)).collect(Collectors.toList());
