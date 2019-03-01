@@ -5,8 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Data
 @Entity
@@ -17,13 +16,11 @@ public class HeroEntity {
     private Long id;
 
     @Column(nullable = false)
-    @Min(value = 8)
-    @Max(value = 32)
-    private String nickname;
+    @Size(min = 2, max = 32)
+    private String name;
 
+    @Size(min = 8, max = 16)
     @Column(nullable = false)
-    @Min(value = 8)
-    @Max(value = 32)
     private String fullname;
 
     @Column
