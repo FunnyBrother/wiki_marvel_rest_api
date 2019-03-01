@@ -9,7 +9,6 @@ import wiki.marvel.dto.HeroDto;
 import wiki.marvel.entity.HeroEntity;
 import wiki.marvel.service.HeroService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -84,11 +83,12 @@ public class HeroController {
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<List<HeroDto>> findAll() {
+    public ResponseEntity<?> findAll() {
         List<HeroEntity> heroEntityList = heroService.findAll();
 
         if(heroEntityList.isEmpty()) {
-            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT);
+            String errorMessage = "Not found anyone heroes";
+            return new ResponseEntity<>(Map.entry("message", errorMessage), HttpStatus.NO_CONTENT);
         }
 
         List<HeroDto> heroDtoList = heroEntityList.stream().map(heroEntity -> modelMapper.map(heroEntity, HeroDto.class)).collect(Collectors.toList());
