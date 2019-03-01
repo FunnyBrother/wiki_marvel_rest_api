@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static wiki.marvel.enums.HeroErrorMessagesEnum.*;
+import static wiki.marvel.enums.HeroControllerMessagesEnum.*;
 
 @RestController(value = "/hero")
 public class HeroController {
@@ -86,7 +86,7 @@ public class HeroController {
         List<HeroEntity> heroEntityList = heroService.findAll();
 
         if(heroEntityList.isEmpty()) {
-            return new ResponseEntity<>(Map.entry("message", NOT_FOUND_ANYONE_HEROES), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(Map.entry("message", NOT_FOUND_ANYONE_HEROES), HttpStatus.NOT_FOUND);
         }
 
         List<HeroDto> heroDtoList = heroEntityList.stream().map(heroEntity -> modelMapper.map(heroEntity, HeroDto.class)).collect(Collectors.toList());
