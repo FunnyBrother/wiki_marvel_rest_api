@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 // TODO: JSON response in error
 // TODO: change entity to dto
 
-@RestController
+@RestController(value = "/hero")
 public class HeroController {
     private final HeroService heroService;
     private final ModelMapper modelMapper;
