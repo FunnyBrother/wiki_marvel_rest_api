@@ -1,22 +1,22 @@
 package wiki.marvel.service;
 
 import org.springframework.stereotype.Service;
-import wiki.marvel.entity.HeroEntity;
+import wiki.marvel.entity.UserEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public interface UserService {
-    HeroEntity save(HeroEntity entity);
+    UserEntity save(UserEntity entity);
 
-    Optional<HeroEntity> findById(Long id);
+    Optional<UserEntity> findById(Long id);
 
     boolean existsById(long id);
 
-    List<HeroEntity> findAll();
+    List<UserEntity> findAll();
 
     void deleteById(Long id);
 
-    void delete(HeroEntity entity);
+    void delete(UserEntity entity);
 }

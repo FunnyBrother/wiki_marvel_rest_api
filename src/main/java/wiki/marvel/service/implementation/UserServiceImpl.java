@@ -1,12 +1,14 @@
 package wiki.marvel.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import wiki.marvel.entity.HeroEntity;
+import wiki.marvel.entity.UserEntity;
 import wiki.marvel.repository.UserRepository;
 import wiki.marvel.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -17,32 +19,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public HeroEntity save(HeroEntity entity) {
-        return null;
+    public UserEntity save(UserEntity entity) {
+        return userRepository.save(entity);
     }
 
     @Override
-    public Optional<HeroEntity> findById(Long id) {
-        return Optional.empty();
+    public Optional<UserEntity> findById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
     public boolean existsById(long id) {
-        return false;
+        return userRepository.existsById(id);
     }
 
     @Override
-    public List<HeroEntity> findAll() {
-        return null;
+    public List<UserEntity> findAll() {
+        Iterable<UserEntity> userEntityIterable = userRepository.findAll();
+        return StreamSupport.stream(userEntityIterable.spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(Long id) {
-
+        userRepository.deleteById(id);
     }
 
     @Override
-    public void delete(HeroEntity entity) {
-
+    public void delete(UserEntity entity) {
+        userRepository.delete(entity);
     }
 }
