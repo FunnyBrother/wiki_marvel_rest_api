@@ -1,6 +1,8 @@
 package wiki.marvel.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -17,7 +19,7 @@ public class HeroEntity {
     @Column(nullable = false)
     @Min(value = 8)
     @Max(value = 32)
-    private String name;
+    private String nickname;
 
     @Column(nullable = false)
     @Min(value = 8)
@@ -26,4 +28,9 @@ public class HeroEntity {
 
     @Column
     private String description;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private UserEntity user;
 }
