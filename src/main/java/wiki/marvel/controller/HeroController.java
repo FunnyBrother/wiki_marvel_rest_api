@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import wiki.marvel.dto.HeroDto;
 import wiki.marvel.entity.HeroEntity;
 import wiki.marvel.service.HeroService;
 
@@ -38,7 +39,9 @@ public class HeroController {
 
         heroService.delete(heroEntity);
 
-        return new ResponseEntity<>(heroEntity, HttpStatus.OK);
+        HeroDto heroDto = modelMapper.map(heroEntity, HeroDto.class);
+
+        return new ResponseEntity<>(heroDto, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
